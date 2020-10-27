@@ -1,0 +1,9 @@
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\bin\Release\CheckSourceTarget.exe.config
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\bin\Release\CheckSourceTarget.exe
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\bin\Release\CheckSourceTarget.pdb
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.Form1.resources
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.Properties.Resources.resources
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.csproj.GenerateResource.cache
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.csproj.CoreCompileInputs.cache
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.exe
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.pdb
