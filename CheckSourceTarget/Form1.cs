@@ -56,7 +56,23 @@ namespace CheckSourceTarget
                         k++;
                     }
                 }
-                MessageBox.Show(string.Format("Amount of lines procceed: {0}", k));
+
+                int correctMatches = 0;
+                int incorrectMatches = 0;
+
+                for (int i = 0; i < k; i++)
+                {
+                    if (string.Equals(sourceValues[i], targetValues[i]))
+                    {
+                        correctMatches++;
+                    }
+                    else
+                    {
+                        incorrectMatches++;
+                    }
+                }
+
+                MessageBox.Show(string.Format("Exact matches found: {0}, Different matches found: {1}", correctMatches, incorrectMatches));
             }
             else
                 MessageBox.Show("Please select translation file path!");
