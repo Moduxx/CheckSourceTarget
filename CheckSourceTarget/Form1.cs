@@ -72,7 +72,7 @@ namespace CheckSourceTarget
                     }
                 }
 
-                MessageBox.Show(string.Format("Exact matches found: {0}, Different matches found: {1}", correctMatches, incorrectMatches));
+                MessageBox.Show(string.Format("Exact matches found: {0}, Differencies found: {1}", correctMatches, incorrectMatches));
             }
             else
                 MessageBox.Show("Please select translation file path!");
