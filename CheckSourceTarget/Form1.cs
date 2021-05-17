@@ -28,27 +28,36 @@ namespace CheckSourceTarget
                 var filePath = string.Empty;
                 var fileContent = string.Empty;
 
-                using (StreamReader reader = new StreamReader(pathTextBox.Text))
-                {
-                    fileContent = reader.ReadToEnd();
-                }
+                ///using (StreamReader reader = new StreamReader(pathTextBox.Text))
+                ///{
+                ///    fileContent = reader.ReadToEnd();
+                ///}
+                ///
 
-                string[] lines = Regex.Split(fileContent, Environment.NewLine);
+                ///string[] lines = Regex.Split(fileContent, Environment.NewLine);
+                ///
+                var fileLines = File.ReadAllLines(pathTextBox.Text);
+                var lines = new List<String>(fileLines);
 
                 string[] targetValues = new string[(lines.Count() + 1)];
                 string[] sourceValues = new string[(lines.Count() + 1)];
 
                 int k = 0;
 
+                if (lines.Count() < 2) 
+                {
+
+                }
+
                 foreach (var line in lines)
                 {
-                    if (line.StartsWith("          <source>"))
+                    if (line.Contains("<source>"))
                     {
                         string[] firstSplit = line.Split('>');
                         string[] secondSplit = firstSplit[1].Split('<');
                         sourceValues[k] = secondSplit[0];
                     }
-                    else if (line.StartsWith("          <target>"))
+                    else if (line.StartsWith("          <target"))
                     {
                         string[] firstSplit = line.Split('>');
                         string[] secondSplit = firstSplit[1].Split('<');
