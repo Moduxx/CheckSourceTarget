@@ -28,12 +28,8 @@ namespace CheckSourceTarget
                 var filePath = string.Empty;
                 var fileContent = string.Empty;
 
-                using (StreamReader reader = new StreamReader(pathTextBox.Text))
-                {
-                    fileContent = reader.ReadToEnd();
-                }
-
-                string[] lines = Regex.Split(fileContent, Environment.NewLine);
+                var fileLines = File.ReadAllLines(pathTextBox.Text);
+                var lines = new List<String>(fileLines);
 
                 string[] targetValues = new string[(lines.Count() + 1)];
                 string[] sourceValues = new string[(lines.Count() + 1)];
@@ -42,13 +38,13 @@ namespace CheckSourceTarget
 
                 foreach (var line in lines)
                 {
-                    if (line.StartsWith("          <source>"))
+                    if (line.Contains("<source>"))
                     {
                         string[] firstSplit = line.Split('>');
                         string[] secondSplit = firstSplit[1].Split('<');
                         sourceValues[k] = secondSplit[0];
                     }
-                    else if (line.StartsWith("          <target>"))
+                    else if (line.StartsWith("          <target"))
                     {
                         string[] firstSplit = line.Split('>');
                         string[] secondSplit = firstSplit[1].Split('<');
@@ -59,6 +55,54 @@ namespace CheckSourceTarget
 
                 int correctMatches = 0;
                 int incorrectMatches = 0;
+                int duplicateValues = 0;
+
+                if (sourceValues.Any())
+                {
+                    var myList = new List<string>();
+                    var duplicates = new List<String>();
+
+                    foreach (var sourceValue in sourceValues)
+                    {
+                        if (!myList.Contains(sourceValue))
+                        {
+                            myList.Add(sourceValue);
+                        }
+                        else
+                        {
+                            duplicates.Add(sourceValue);
+                        }
+                    }
+
+                    if (duplicates.Any())
+                    {
+                        var uniqueItems = new HashSet<string>(duplicates);
+
+                        SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+                        saveFileDialog1.FileName = "SourceValueDuplicates.txt";
+                        saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                        saveFileDialog1.FilterIndex = 2;
+                        saveFileDialog1.RestoreDirectory = true;
+
+                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            StreamWriter writer = new StreamWriter(saveFileDialog1.OpenFile());
+
+                            foreach (string s in uniqueItems)
+                            {
+                                writer.WriteLine(s);
+                                duplicateValues++;
+                            }
+                            if (duplicateValues > 0)
+                            {
+                                duplicateValues--;
+                            }
+                            writer.Dispose();
+                            writer.Close();
+                        }
+                    }
+                }
 
                 for (int i = 0; i < k; i++)
                 {
@@ -72,7 +116,7 @@ namespace CheckSourceTarget
                     }
                 }
 
-                MessageBox.Show(string.Format("Exact matches found: {0}, Differencies found: {1}", correctMatches, incorrectMatches));
+                MessageBox.Show(string.Format("Exact matches found: {0}, Differencies found: {1}, Duplicates found: {2}", correctMatches, incorrectMatches, duplicateValues));
             }
             else
                 MessageBox.Show("Please select translation file path!");

@@ -7,3 +7,4 @@ C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceT
 C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.csproj.CoreCompileInputs.cache
 C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.exe
 C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.pdb
+C:\Users\modux\Documents\GitHub\CheckSourceTarget\CheckSourceTarget\CheckSourceTarget\obj\Release\CheckSourceTarget.csprojAssemblyReference.cache
