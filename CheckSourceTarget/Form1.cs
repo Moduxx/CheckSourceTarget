@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CheckSourceTarget.src.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -59,47 +61,77 @@ namespace CheckSourceTarget
 
                 if (sourceValues.Any())
                 {
-                    var myList = new List<string>();
-                    var duplicates = new List<String>();
+                    var myList = new List<MultipleStrings>();
+                    var duplicates = new List<MultipleStrings>();
+                    int i = 0;
 
                     foreach (var sourceValue in sourceValues)
                     {
-                        if (!myList.Contains(sourceValue))
+                        MultipleStrings ms = new MultipleStrings();
+                        ms.SourceValue = sourceValue;
+                        ms.TargetValue = targetValues[i];
+
+                        var tempMyList = myList.FindAll(x => x.SourceValue == ms.SourceValue);
+
+                        if (!tempMyList.Any())
                         {
-                            myList.Add(sourceValue);
+                            myList.Add(ms);
                         }
                         else
                         {
-                            duplicates.Add(sourceValue);
+                            duplicates.Add(ms);
+                            Console.WriteLine("Kazka Rado " + ms.SourceValue + " " + ms.TargetValue);
                         }
+                        i++;
                     }
 
                     if (duplicates.Any())
                     {
-                        var uniqueItems = new HashSet<string>(duplicates);
+                        var filteredSources = new List<String>();
+                        Boolean IsNotMatch;
 
-                        SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-                        saveFileDialog1.FileName = "SourceValueDuplicates.txt";
-                        saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                        saveFileDialog1.FilterIndex = 2;
-                        saveFileDialog1.RestoreDirectory = true;
-
-                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                        foreach (var item in myList)
                         {
-                            StreamWriter writer = new StreamWriter(saveFileDialog1.OpenFile());
+                            IsNotMatch = false;
+                            var tempDuplicates = duplicates.FindAll(x => (x.SourceValue == item.SourceValue));
+                            if (tempDuplicates.Any())
+                            {
+                                foreach (var tempDuplicate in tempDuplicates)
+                                {
+                                    if (item.TargetValue != tempDuplicate.TargetValue)
+                                    {
+                                        IsNotMatch = true;
+                                    }
+                                }
+                            }
+                            if (IsNotMatch)
+                            {
+                                filteredSources.Add(item.SourceValue);
+                            }
+                        }
 
-                            foreach (string s in uniqueItems)
+
+                        if (filteredSources.Any())
+                        {
+                            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+                            saveFileDialog1.FileName = "SourceValueDuplicates.txt";
+                            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                            saveFileDialog1.FilterIndex = 2;
+                            saveFileDialog1.RestoreDirectory = true;
+
+                            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                             {
-                                writer.WriteLine(s);
-                                duplicateValues++;
+                                StreamWriter writer = new StreamWriter(saveFileDialog1.OpenFile());
+
+                                foreach (string s in filteredSources)
+                                {
+                                    writer.WriteLine("<source>" + s + "</source>");
+                                    duplicateValues++;
+                                }
+                                writer.Dispose();
+                                writer.Close();
                             }
-                            if (duplicateValues > 0)
-                            {
-                                duplicateValues--;
-                            }
-                            writer.Dispose();
-                            writer.Close();
                         }
                     }
                 }
